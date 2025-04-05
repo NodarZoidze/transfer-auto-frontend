@@ -1,31 +1,31 @@
 "use client";
 import { useState } from 'react';
 
-export default function BookingPopup({ isOpen, onClose, onContinue }: { 
-  isOpen: boolean, 
+export default function BookingPopup({ isOpen, onClose, onContinue }: {
+  isOpen: boolean,
   onClose: () => void,
-  onContinue: () => void
+  onContinue: (transport: string) => void
 }) {
   const [selectedOption, setSelectedOption] = useState('sedan');
 
   if (!isOpen) return null;
 
   const transportTypes = [
-    { id: 'sedan', label: 'სედანი', desc: 'თბილი კლიმატი', icon: '/sedan.svg' },
-    { id: 'jeep', label: 'ჯიპი', desc: 'თბილი კლიმატი', icon: '/jeep.svg' },
-    { id: 'motorcycle', label: 'მოტოციკლი', desc: 'თბილი კლიმატი', icon: '/motorcycle.svg' },
-    { id: 'furgon', label: 'ფურგონი', desc: 'თბილი კლიმატი', icon: '/furgon.svg' },
+    { id: 'sedan', label: 'Sedan', desc: 'Standard car – ideal for personal or family vehicles', icon: '/sedan.svg' },
+    { id: 'jeep', label: 'SUV', desc: 'Larger vehicles with more space or off-road capability', icon: '/jeep.svg' },
+    { id: 'motorcycle', label: 'Motorcycle', desc: 'Two-wheeled vehicles, handled with secure equipment', icon: '/motorcycle.svg' },
+    { id: 'furgon', label: 'Van', desc: 'Commercial or multi-passenger transport vehicles', icon: '/furgon.svg' },
   ];
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/10 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-white rounded-xl shadow-lg w-[500px] p-6">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">სერვისის დაჯავშნა</h2>
+          <h2 className="text-xl font-semibold">Select Vehicle Type</h2>
           <button onClick={onClose}>✕</button>
         </div>
 
-        <p className="mb-4">აირჩიე ტრანსპორტის ტიპი</p>
+        <p className="mb-4">Choose what kind of vehicle you want to transport.</p>
 
         <div className="space-y-3">
           {transportTypes.map(option => (
@@ -48,14 +48,13 @@ export default function BookingPopup({ isOpen, onClose, onContinue }: {
         </div>
 
         <button
-  className="mt-6 w-full bg-purple-600 text-white py-2 rounded-full"
-  onClick={() => {
-    console.log("Clicked Continue from BookingPopup.tsx");
-    onContinue();
-  }}
+  onClick={() => onContinue(selectedOption)}
+  className="bg-purple-600 text-white w-full py-2 rounded-full mt-4"
 >
-  გაგრძელება
+  Next
 </button>
+
+
 
 
 

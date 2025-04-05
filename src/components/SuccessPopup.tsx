@@ -1,16 +1,16 @@
 "use client";
 
-export default function SuccessPopup({ isOpen, onClose }: { 
-  isOpen: boolean, 
-  onClose: () => void 
+export default function SuccessPopup({ isOpen, onClose }: {
+  isOpen: boolean,
+  onClose: () => void
 }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-transparent flex items-center justify-center z-50">
       <div className="bg-white rounded-xl shadow-lg w-[500px] p-6 text-center">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-left">სერვისის დაჯავშნა</h2>
+
           <button onClick={onClose}>✕</button>
         </div>
 
@@ -24,10 +24,16 @@ export default function SuccessPopup({ isOpen, onClose }: {
           <span className="text-green-600 text-3xl">✓</span>
         </div>
 
-        <h3 className="text-xl font-bold mb-2">დაჯავშნა წარმატებით შესრულდა!</h3>
+        <h3 className="text-xl font-bold mb-2">Booking Successfully Submitted!</h3>
         <p className="text-sm text-gray-600">
-          ჩვენი ოპერატორი მოგმართავთ და დაგეხმარებათ.
-          ყველა დეტალი გაიგზავნება თქვენს მიერ მითითებულ ელ-ფოსტაზე.
+        Thank you — your request has been received and is being processed.
+
+        You’ll receive a confirmation email shortly with the delivery details and next steps.
+        If you have any questions in the meantime, feel free to reach out.
+
+       📩 info@transferauto.ge
+       📞 +995 (Your Number) <br />
+       Average response time: under 1 hour during business hours.
         </p>
       </div>
     </div>

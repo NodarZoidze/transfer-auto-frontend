@@ -1,37 +1,44 @@
 "use client";
 import { useState } from 'react';
 
-export default function DestinationPopup({ isOpen, onClose, onContinue }: {
-    isOpen: boolean,
-    onClose: () => void,
-    onContinue: () => void
-  }) {
-  
+export default function DestinationPopup({
+  isOpen,
+  onClose,
+  onContinue
+}: {
+  isOpen: boolean,
+  onClose: () => void,
+  onContinue: (destination: { id: string; label: string; distance: string }) => void
+}) {
   const [selectedDestination, setSelectedDestination] = useState('foti-tbilisi');
+
   const destinations = [
-    { id: 'foti-tbilisi', label: 'ფოთი - თბილისი', distance: '350კმ' },
-    { id: 'foti-qutaisi', label: 'ფოთი - ქუთაისი', distance: '250კმ' },
-    { id: 'foti-zugdidi', label: 'ფოთი - ზუგდიდი', distance: '100კმ' },
-    { id: 'batumi-tbilisi', label: 'ბათუმი - თბილისი', distance: '370კმ' },
+    { id: 'poti-tbilisi', label: 'Poti - Tbilisi', distance: '300km' },
+    { id: 'poti-batumi', label: 'Poti - Batumi', distance: '70km' },
+    { id: 'batumi-tbilisi', label: 'Batumi - Tbilisi', distance: '350km' },
+    { id: 'a-b', label: 'Other city', distance: 'X km' },
   ];
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-transparent flex items-center justify-center z-50">
       <div className="bg-white rounded-xl shadow-lg w-[500px] p-6">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">სერვისის დაჯავშნა</h2>
+          <h2 className="text-xl font-semibold">Choose Your Transport Route</h2>
           <button onClick={onClose}>✕</button>
         </div>
 
-        <p className="mb-4">აირჩიე მიმართულება</p>
+        <p className="mb-4">Select a city-to-city route for your vehicle delivery</p>
 
-        <input type="text" placeholder="ძებნა" className="w-full border rounded-lg p-2 mb-4"/>
+        <input type="text" placeholder="Search" className="w-full border rounded-lg p-2 mb-4" />
 
         <div className="space-y-3 max-h-48 overflow-auto">
           {destinations.map(dest => (
-            <label key={dest.id} className={`flex items-center justify-between border p-3 rounded-lg cursor-pointer ${selectedDestination === dest.id ? 'border-purple-500 bg-purple-50' : ''}`}>
+            <label
+              key={dest.id}
+              className={`flex items-center justify-between border p-3 rounded-lg cursor-pointer ${selectedDestination === dest.id ? 'border-purple-500 bg-purple-50' : ''}`}
+            >
               <input
                 type="radio"
                 name="destination"
@@ -42,18 +49,23 @@ export default function DestinationPopup({ isOpen, onClose, onContinue }: {
               />
               <div className="flex-1 ml-3">
                 <p className="font-semibold">{dest.label}</p>
-                <p className="text-xs text-gray-500">მანძილი: {dest.distance}</p>
+                <p className="text-xs text-gray-500">Distance: {dest.distance}</p>
               </div>
             </label>
           ))}
         </div>
 
         <div className="flex justify-between mt-6">
-        <button className="text-gray-600 underline" onClick={onClose}>უკან</button>
-  <button className="bg-purple-600 text-white py-2 px-6 rounded-full" onClick={onContinue}>
-    გაგრძელება
-  </button>
-
+          <button className="text-gray-600 underline" onClick={onClose}>Back</button>
+          <button
+            onClick={() => {
+              const selected = destinations.find(d => d.id === selectedDestination);
+              if (selected) onContinue(selected);
+            }}
+            className="bg-purple-600 text-white w-full py-2 rounded-full mt-4"
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
